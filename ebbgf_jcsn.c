@@ -40,7 +40,7 @@ int main() {
 		}
 		if (input2 == 2){
 			int v;
-			c=0;
+			c=1;
 			achou = 0;
 			scanf("%d", &v);
 			v = findInorder(arvore, v);
@@ -100,13 +100,15 @@ struct Tree* insertnode(AvlTree* arv, int nvfolha){
 }
 int findInorder(AvlTree* node, int x) { 
 	
-	if (node == NULL || node -> val > x) { 
+	if (node == NULL ) { 
 		if(achou == 1)
 			return 1;
 		return 0;
-	}	
-    	findInorder(node->esquerda,x); 
-		
+	}		
+    
+    findInorder(node->esquerda,x); 
+    if(node -> val > x)
+    	return 0;
 	if(node -> val == x){
 		achou = 1;
 		printf("%d\n", c);
