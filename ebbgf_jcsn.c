@@ -11,7 +11,9 @@ typedef struct Tree {
 	int altura;
 } AvlTree;
 
-int insertnode(AvlTree* arv, int nvfolha);
+struct Tree* newnode(int nvfolha);
+struct Tree* insertnode(AvlTree* arv, int nvfolha);
+
 int findInorder(AvlTree* node, int x);
 int printInorder(AvlTree* node, int x);
 
@@ -19,32 +21,22 @@ void rotDireita(AvlTree* r);
 void rotDDireita(AvlTree* r);
 void rotDEsquerda(AvlTree* r);
 void rotEsquerda(AvlTree* r);
-void inserirAVL (AvlTree* r, int x);
-int MAXIMO(int altDireita,int altEsquerda);
-int altura(AvlTree *no);
-int atualizaAltura(AvlTree *no);
 
 
 int main() {
-	AvlTree* arvore = (AvlTree*)malloc(sizeof(AvlTree));
+	AvlTree* arvore = NULL;
 	int input;
 	scanf("%d", &input);
+	
 	for(int i = 0; i < input;i++){
 		int input2;
 		scanf("%d", &input2);
 		if (input2 ==1){
-				int nvfolha;
-				scanf("%d", &nvfolha);	
-			if (count == 0){
-				count =1;
-				arvore -> val = nvfolha;
-				arvore -> direita = NULL;
-				arvore -> esquerda = NULL;
-				arvore -> altura = 0;
-			
-			} else{
-			insertnode(arvore,nvfolha);	
-			}	
+				int x;
+				scanf("%d", &x);	
+				arvore = insertnode(arvore,x);
+				
+				
 		}
 		if (input2 == 2){
 			int v;
@@ -61,54 +53,50 @@ int main() {
 	}
 
 }
+struct Tree* newnode(int nvfolha){
 
-int insertnode(AvlTree* arv, int nvfolha){
-
-	
 	AvlTree* atual = (AvlTree*)malloc(sizeof(AvlTree));
-	atual -> val = nvfolha;
+	atual-> val = nvfolha;
 	atual -> direita = NULL;
 	atual -> esquerda = NULL;
 	atual -> altura = 0;
-	printf("agora é %d", arv -> val);
-	printf(" agora é %d\n", arv -> altura);
+	return atual;
+}
+
+struct Tree* insertnode(AvlTree* arv, int nvfolha){
 	
 	
-	if(arv -> val < nvfolha){
-		arv -> altura = arv ->altura +1;
-		if(arv -> direita == NULL){
-			atual -> head = arv;						
-			arv ->direita = atual;
-			
-			if(arv -> head ->altura == 2){
-				if(arv -> altura == -1)
-					rotDEsquerda(arv);	
-				if(arv -> altura == 1)
-					rotDireita(arv);	
-			}
-			return 1;	
-		}
-		insertnode(arv -> direita, nvfolha);
-	} else {
+	if(arv == NULL){
+
+		return newnode(nvfolha);
+	}
+	else{
+		if(arv -> val < nvfolha){
+		
+			arv -> altura = arv ->altura +1;
+			arv -> direita = insertnode(arv -> direita, nvfolha);
+		
+		}		
+		if(arv -> head ->altura == 2){ //NÃO TA PEGANDO
+			if(arv -> altura == -1)
+				rotDEsquerda(arv);	
+			if(arv -> altura == 1)
+				rotDireita(arv);	
+		} 
+		if (arv -> val > nvfolha) {
+	
 			arv -> altura = arv ->altura -1;
-			if(arv -> esquerda == NULL){
-				atual -> head = arv;			
-				arv ->esquerda = atual;
-			if(arv -> head ->altura == -2){
-				if(arv -> altura == -1)
-					rotEsquerda(arv);	
+			arv -> esquerda = insertnode(arv -> esquerda, nvfolha);
 			
+		}
+		if(arv -> head ->altura == -2){//NÃO TA PEGANDO
+			if(arv -> altura == -1)
+					rotEsquerda(arv);	
 				if(arv -> altura == 1)
 					rotDDireita(arv);	
-			
-				}
-				return 1;
-			}
-			insertnode(arv -> esquerda, nvfolha);
 		}	
-			
-	
-		
+	}
+	return arv;
 }
 int findInorder(AvlTree* node, int x) { 
 	
