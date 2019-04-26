@@ -45,7 +45,7 @@ int main() {
 			scanf("%d", &v);
 			v = findInorder(arvore, v);
 			if (v == 0)
-				printf("Data tidak ada"); 
+				printf("Data tidak ada\n"); 
 			
 		}
 		if (input2 == 3)
@@ -77,7 +77,7 @@ struct Tree* insertnode(AvlTree* arv, int nvfolha){
 			arv -> direita = insertnode(arv -> direita, nvfolha);
 		
 		}		
-		if(arv -> head ->altura == 2){ //NÃO TA PEGANDO
+		if(arv -> head != NULL && arv -> head ->altura == 2){ //NÃO TA PEGANDO
 			if(arv -> altura == -1)
 				rotDEsquerda(arv);	
 			if(arv -> altura == 1)
@@ -89,7 +89,7 @@ struct Tree* insertnode(AvlTree* arv, int nvfolha){
 			arv -> esquerda = insertnode(arv -> esquerda, nvfolha);
 			
 		}
-		if(arv -> head ->altura == -2){//NÃO TA PEGANDO
+		if(arv -> head != NULL && arv -> head ->altura == -2){//NÃO TA PEGANDO
 			if(arv -> altura == -1)
 					rotEsquerda(arv);	
 				if(arv -> altura == 1)
@@ -109,7 +109,7 @@ int findInorder(AvlTree* node, int x) {
 		
 	if(node -> val == x){
 		achou = 1;
-		printf("%d", c);
+		printf("%d\n", c);
 		return 1;
 	}
 	c++;
