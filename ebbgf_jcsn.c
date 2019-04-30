@@ -87,7 +87,12 @@ struct Tree* insertnode(AvlTree* arv, int nvfolha){
 			if(arv -> altura == -1)
 				rotDEsquerda(arv);	
 			if(arv -> altura == 1)
-				rotDireita(arv);	
+				rotDireita(arv);
+			// atualiza altura
+			arv -> altura = 0;
+			arv -> direita -> altura =0;
+			arv -> esquerda -> altura =0;
+			arv -> nodesE--;	
 			} 
 		
 		if (arv -> val > nvfolha) {
@@ -102,7 +107,11 @@ struct Tree* insertnode(AvlTree* arv, int nvfolha){
 			if(arv -> altura == -1)
 					rotEsquerda(arv);	
 				if(arv -> altura == 1)
-					rotDDireita(arv);	
+					rotDDireita(arv);
+			arv -> altura = 0;
+			arv -> direita -> altura =0;
+			arv -> esquerda -> altura =0;	
+			arv -> nodesD--;	
 		}	
 	}
 	return arv;
@@ -151,6 +160,7 @@ void rotDireita(AvlTree* r){
 	noA->esquerda = (r)->esquerda;
 	r = noA;
 	noA -> head = r;
+	
 }
 
 void rotEsquerda(AvlTree* r){
